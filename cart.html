@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Your Shopping Cart</h1>
+    <section class="cart-list">
+      <h2>Products in Your Cart</h2>
+      <div class="cart-grid" id="cartGrid">
+        <!-- Products added to the cart will appear here dynamically -->
+      </div>
+    </section>
+    <div class="checkout">
+      <h2 id="totalPrice">Total: 0.00</h2>
+      <button class="checkout-button" id="checkoutButton">Proceed to Checkout</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; J-Smiley's Chic Closet💐</p>
+  </footer>
+
+  <script>
+    // Fetch cart items from localStorage
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const cartGrid = document.getElementById("cartGrid");
+    const totalPriceElement = document.getElementById("totalPrice");
+
+    // Function to update total price
+    function updateTotalPrice() {
+      const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+      totalPriceElement.innerText = `Total: ${total.toFixed(2)}`;
+    }
+
+    // Function to render cart items
+    function renderCartItems() {
+      cartGrid.innerHTML = ""; // Clear existing items
+      if (cartItems.length === 0) {
+        cartGrid.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+      }
+
+      cartItems.forEach((item, index) => {
+        const productDiv = document.createElement("div");
+        productDiv.classList.add("cart-product");
+
+        productDiv.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div class="cart-product-details">
+            <h3>${item.name}</h3>
+            <p><strong>Price:</strong> ${item.price}</p>
+          </div>
+          <button class="remove-from-cart" data-index="${index}">Remove</button>
+        `;
+        cartGrid.appendChild(productDiv);
+      });
+
+      updateTotalPrice();
+    }
+
+    // Function to remove item from cart
+    cartGrid.addEventListener("click", (event) => {
+      if (event.target.classList.contains("remove-from-cart")) {
+        const index = event.target.getAttribute("data-index");
+        cartItems.splice(index, 1); // Remove item from the cart
+        localStorage.setItem("cartItems", JSON.stringify(cartItems)); // Update localStorage
+        renderCartItems(); // Re-render the cart
+      }
+    });
+
+    // Proceed to checkout
+    document.getElementById("checkoutButton").addEventListener("click", () => {
+      if (cartItems.length === 0) {
+        alert("Your cart is empty. Please add items to proceed.");
+      } else {
+        alert("Proceeding to checkout...");
+        // Redirect to a checkout page if needed
+        // window.location.href = "checkout.html";
+      }
+    });
+
+    // Initial render of cart items
+    renderCartItems();
+  </script>
+</body>
+</html>
