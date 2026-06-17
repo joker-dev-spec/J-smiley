@@ -3,100 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping Cart</title>
+  <title>Your Cart — Glow Co.</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="cart.html">Cart</a></li>
-      </ul>
-    </nav>
+
+  <header id="header" class="scrolled">
+    <div class="header-inner">
+      <a href="index.html" class="logo">Glow Co<span class="logo-dot">.</span></a>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="nav-link">Shop</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li>
+            <a href="cart.html" class="nav-cart">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+              <span class="cart-count" id="cartCount">0</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <h1>Your Shopping Cart</h1>
-    <section class="cart-list">
-      <h2>Products in Your Cart</h2>
-      <div class="cart-grid" id="cartGrid">
-        <!-- Products added to the cart will appear here dynamically -->
-      </div>
-    </section>
-    <div class="checkout">
-      <h2 id="totalPrice">Total: 0.00</h2>
-      <button class="checkout-button" id="checkoutButton">Proceed to Checkout</button>
-    </div>
+  <main class="cart-page">
+    <p class="section-eyebrow">Ready to glow?</p>
+    <h1>Your Cart</h1>
+    <p class="sub" id="cartSubtitle"></p>
+
+    <div id="cartContent"></div>
   </main>
 
+  <div class="toast" id="toast"></div>
+
   <footer>
-    <p>&copy; J-Smiley's Chic Closet💐</p>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Glow Co<span class="logo-dot">.</span></a>
+        <p>Premium body creams crafted<br>for every skin type.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Shop</h4>
+        <a href="index.html">All Products</a>
+        <a href="cart.html">Your Cart</a>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-links">
+        <h4>Follow Us</h4>
+        <a href="https://wa.me/qr/IEDMJTDBM3L6D1" target="_blank">WhatsApp</a>
+        <a href="https://www.instagram.com/okunborjanet85/profilecard/?igsh=MmFnMDEzanFmMzA5" target="_blank">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Glow Co. All rights reserved.</p>
+    </div>
   </footer>
 
+  <script src="main.js"></script>
   <script>
-    // Fetch cart items from localStorage
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const cartGrid = document.getElementById("cartGrid");
-    const totalPriceElement = document.getElementById("totalPrice");
+    function renderCart() {
+      const cart = getCart();
+      const container = document.getElementById('cartContent');
+      const subtitle  = document.getElementById('cartSubtitle');
 
-    // Function to update total price
-    function updateTotalPrice() {
-      const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
-      totalPriceElement.innerText = `Total: ${total.toFixed(2)}`;
-    }
-
-    // Function to render cart items
-    function renderCartItems() {
-      cartGrid.innerHTML = ""; // Clear existing items
-      if (cartItems.length === 0) {
-        cartGrid.innerHTML = "<p>Your cart is empty.</p>";
+      if (cart.length === 0) {
+        subtitle.textContent = '';
+        container.innerHTML = `
+          <div class="empty-cart">
+            <div style="font-size:4rem;margin-bottom:16px;">🛍️</div>
+            <h2>Your cart is empty</h2>
+            <p style="margin-bottom:28px;font-size:0.95rem;">Looks like you haven't added anything yet.</p>
+            <a href="index.html" class="btn-primary">Browse products</a>
+          </div>`;
         return;
       }
 
-      cartItems.forEach((item, index) => {
-        const productDiv = document.createElement("div");
-        productDiv.classList.add("cart-product");
+      subtitle.textContent = `${cart.length} item${cart.length > 1 ? 's' : ''} in your cart`;
 
-        productDiv.innerHTML = `
-          <img src="${item.image}" alt="${item.name}">
-          <div class="cart-product-details">
+      const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+      const shipping = subtotal >= 15000 ? 0 : 1500;
+      const total    = subtotal + shipping;
+
+      const itemsHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22 viewBox=%220 0 80 80%22%3E%3Crect fill=%22%23F2EDE4%22 width=%2280%22 height=%2280%22/%3E%3Ctext x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2228%22%3E🧴%3C/text%3E%3C/svg%3E'">
+          <div class="cart-item-info">
             <h3>${item.name}</h3>
-            <p><strong>Price:</strong> ${item.price}</p>
+            <p>${formatPrice(item.price)}</p>
           </div>
-          <button class="remove-from-cart" data-index="${index}">Remove</button>
-        `;
-        cartGrid.appendChild(productDiv);
+          <button class="remove-btn" data-index="${index}" title="Remove">✕</button>
+        </div>
+      `).join('');
+
+      container.innerHTML = `
+        <div class="cart-items-list">${itemsHTML}</div>
+        <div class="cart-summary">
+          <h2>Order Summary</h2>
+          <div class="summary-row"><span>Subtotal</span><span>${formatPrice(subtotal)}</span></div>
+          <div class="summary-row"><span>Shipping</span><span>${shipping === 0 ? 'Free 🎉' : formatPrice(shipping)}</span></div>
+          ${shipping > 0 ? `<div class="summary-row"><span style="font-size:0.78rem;color:var(--gold)">Add ${formatPrice(15000 - subtotal)} more for free shipping</span></div>` : ''}
+          <div class="summary-row total"><span>Total</span><span>${formatPrice(total)}</span></div>
+          <button class="btn-primary" id="checkoutBtn" style="width:100%;margin-top:20px;text-align:center;">Proceed to Checkout</button>
+          <a href="index.html" style="display:block;text-align:center;margin-top:16px;font-size:0.85rem;color:var(--text-soft);">← Continue Shopping</a>
+        </div>`;
+
+      // Remove buttons
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cart = getCart();
+          const name = cart[btn.dataset.index].name;
+          cart.splice(Number(btn.dataset.index), 1);
+          saveCart(cart);
+          showToast(`Removed from cart`);
+          renderCart();
+        });
       });
 
-      updateTotalPrice();
+      // Checkout
+      document.getElementById('checkoutBtn').addEventListener('click', () => {
+        // Build WhatsApp message
+        const lines = cart.map(i => `• ${i.name} — ${formatPrice(i.price)}`).join('\n');
+        const msg = encodeURIComponent(`Hi Glow Co! I'd like to order:\n${lines}\n\nTotal: ${formatPrice(total)}`);
+        window.open(`https://wa.me/qr/IEDMJTDBM3L6D1?text=${msg}`, '_blank');
+      });
     }
 
-    // Function to remove item from cart
-    cartGrid.addEventListener("click", (event) => {
-      if (event.target.classList.contains("remove-from-cart")) {
-        const index = event.target.getAttribute("data-index");
-        cartItems.splice(index, 1); // Remove item from the cart
-        localStorage.setItem("cartItems", JSON.stringify(cartItems)); // Update localStorage
-        renderCartItems(); // Re-render the cart
-      }
-    });
-
-    // Proceed to checkout
-    document.getElementById("checkoutButton").addEventListener("click", () => {
-      if (cartItems.length === 0) {
-        alert("Your cart is empty. Please add items to proceed.");
-      } else {
-        alert("Proceeding to checkout...");
-        // Redirect to a checkout page if needed
-        // window.location.href = "checkout.html";
-      }
-    });
-
-    // Initial render of cart items
-    renderCartItems();
+    document.addEventListener('DOMContentLoaded', renderCart);
   </script>
 </body>
 </html>

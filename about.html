@@ -3,29 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us</title>
+  <title>About — Glow Co.</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="cart.html">Cart</a></li>
-      </ul>
-    </nav>
+
+  <header id="header" class="scrolled">
+    <div class="header-inner">
+      <a href="index.html" class="logo">Glow Co<span class="logo-dot">.</span></a>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="nav-link">Shop</a></li>
+          <li><a href="about.html" class="nav-link active">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li>
+            <a href="cart.html" class="nav-cart">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+              <span class="cart-count" id="cartCount">0</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <h1>About Us</h1>
-    <p>We are dedicated to providing the best shopping experience with a wide range of products...</p>
-    <p>!!!And also 😻 Elevate Your Style Game! 🎯 Shop Our latest Clothing & Wig collection Now! 😉 Get 20% off Your First Purchase Of Clothes & Wigs </p>
-  </main>
+  <section class="page-hero">
+    <p class="section-eyebrow">Our Story</p>
+    <h1>Built on the belief<br><em>skin is sacred.</em></h1>
+    <p>We started Glow Co. because we couldn't find body creams that were luxurious, clean, and actually made for our skin. So we made them ourselves.</p>
+  </section>
+
+  <section class="about-section">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>From a kitchen to a collection</h2>
+        <p>Glow Co. was born in 2020 in Lagos — one small batch of shea butter, two hands, and a vision for what skincare could feel like.</p>
+        <p>Every formula is developed with dermatologists, tested on real skin, and made without parabens, sulphates, or synthetic fragrance. We believe your skin deserves ingredients you can actually pronounce.</p>
+        <p>Today we ship across Nigeria, but the ethos stays the same: premium ingredients, honest formulas, visible results.</p>
+        <a href="index.html" class="btn-primary" style="margin-top:12px;">Shop the collection</a>
+      </div>
+      <div class="about-img-placeholder">🌿</div>
+    </div>
+
+    <div class="values-list">
+      <div class="value-item">
+        <div class="icon">🌿</div>
+        <h4>Natural First</h4>
+        <p>Every product starts with natural butters, botanical extracts, and oils your skin recognizes.</p>
+      </div>
+      <div class="value-item">
+        <div class="icon">🔬</div>
+        <h4>Dermatologist Tested</h4>
+        <p>Formulated with skin professionals. Tested before every single launch — no exceptions.</p>
+      </div>
+      <div class="value-item">
+        <div class="icon">🐰</div>
+        <h4>Cruelty Free</h4>
+        <p>Never tested on animals. Never will be. Certified and committed.</p>
+      </div>
+      <div class="value-item">
+        <div class="icon">♻️</div>
+        <h4>Conscious Packaging</h4>
+        <p>Recyclable packaging, refillable options coming soon. We care about what happens after the jar.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast" id="toast"></div>
 
   <footer>
-    <p>&copy; J-Smiley's Chic Closet💐</p>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Glow Co<span class="logo-dot">.</span></a>
+        <p>Premium body creams crafted<br>for every skin type.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Shop</h4>
+        <a href="index.html">All Products</a>
+        <a href="cart.html">Your Cart</a>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-links">
+        <h4>Follow Us</h4>
+        <a href="https://wa.me/qr/IEDMJTDBM3L6D1" target="_blank">WhatsApp</a>
+        <a href="https://www.instagram.com/okunborjanet85/profilecard/?igsh=MmFnMDEzanFmMzA5" target="_blank">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Glow Co. All rights reserved.</p>
+    </div>
   </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>
