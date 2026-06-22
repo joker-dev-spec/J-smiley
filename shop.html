@@ -6,22 +6,224 @@
   <title>Shop — Glow Co.</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Lightbox overlay ───────────────────────────────────── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(44,26,46,0.82);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: lbFadeIn 0.25s ease;
+    }
+    #lightbox.open { display: flex; }
+    @keyframes lbFadeIn { from{opacity:0} to{opacity:1} }
+
+    .lb-inner {
+      background: #fff;
+      border-radius: 24px;
+      max-width: 840px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(44,26,46,0.35);
+      animation: lbSlideUp 0.28s cubic-bezier(0.4,0,0.2,1);
+      max-height: 90vh;
+    }
+    @keyframes lbSlideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    .lb-img-side {
+      position: relative;
+      background: var(--pink-soft);
+      aspect-ratio: 1/1;
+      overflow: hidden;
+    }
+    .lb-img-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .lb-img-side .lb-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg,var(--pink-soft),var(--cream));
+      font-size: 4rem;
+    }
+    .lb-img-side .lb-fallback.show { display: flex; }
+
+    .lb-info-side {
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+    .lb-badge {
+      display: inline-block;
+      background: var(--pink-deep);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      width: fit-content;
+    }
+    .lb-badge.hidden { display: none; }
+    .lb-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.9rem;
+      color: var(--plum);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .lb-desc {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .lb-price {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--plum);
+      margin-bottom: 28px;
+    }
+    .lb-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .lb-actions .btn-primary {
+      flex: 1;
+      min-width: 130px;
+      text-align: center;
+      border: none;
+    }
+    .lb-wish {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1.5px solid var(--pink);
+      background: transparent;
+      font-size: 1.4rem;
+      color: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .lb-wish.wished { color: var(--pink-deep); border-color: var(--pink-deep); }
+    .lb-wish:hover { transform: scale(1.1); }
+
+    .lb-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 10;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(44,26,46,0.55);
+      color: #fff;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lb-close:hover { background: rgba(44,26,46,0.85); }
+
+    /* ── Product card: pointer cursor ──────────────────────── */
+    .product-card { cursor: pointer; }
+    .product-img-wrap { position: relative; }
+    .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── Emoji fallback placeholder for products with no photo ── */
+    .img-placeholder {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--pink-soft) 0%, var(--cream) 100%);
+      font-size: 2.8rem;
+      color: var(--pink-deep);
+    }
+    .img-placeholder.show { display: flex; }
+    .img-placeholder span {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      margin-top: 8px;
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    @media (max-width: 620px) {
+      .lb-inner { grid-template-columns: 1fr; max-height: 92vh; overflow-y: auto; }
+      .lb-img-side { aspect-ratio: 4/3; }
+      .lb-info-side { padding: 24px 20px; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- ══ LIGHTBOX ══════════════════════════════════════════════ -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Product detail">
+    <div class="lb-inner" id="lbInner">
+      <div class="lb-img-side">
+        <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+        <img id="lbImg" src="" alt="">
+        <div class="lb-fallback" id="lbFallback"></div>
+      </div>
+      <div class="lb-info-side">
+        <div>
+          <div class="lb-badge" id="lbBadge"></div>
+          <h2 class="lb-title" id="lbTitle"></h2>
+          <p class="lb-desc" id="lbDesc"></p>
+          <div class="lb-price" id="lbPrice"></div>
+        </div>
+        <div class="lb-actions">
+          <button class="btn-primary" id="lbCartBtn">Add to Cart</button>
+          <button class="lb-wish" id="lbWishBtn" title="Save to wishlist">♡</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HEADER ════════════════════════════════════════════════ -->
   <header id="header" class="scrolled">
     <div class="header-inner">
-      <a href="index.html" class="logo">
-  <div class="logo-img-wrap">
-    <img src="glow-logo.png" alt="Glow Co." 
-         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-    <div class="logo-mark" style="display:none;">G</div>
-  </div>
-  low Co<span class="logo-dot">.</span>
-</a>
+      <a href="home.html" class="logo">
+        <div class="logo-img-wrap">
+          <img src="logo.jpeg" alt="Glow Co."
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="logo-mark" style="display:none;">G</div>
+        </div>
+        low Co<span class="logo-dot">.</span>
+      </a>
       <nav>
         <ul>
-          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="home.html" class="nav-link">Home</a></li>
           <li><a href="shop.html" class="nav-link active">Shop</a></li>
           <li><a href="quiz.html" class="nav-link">Skin Quiz</a></li>
           <li><a href="about.html" class="nav-link">About</a></li>
@@ -47,6 +249,7 @@
     </div>
   </header>
 
+  <!-- ══ SHOP HERO ═════════════════════════════════════════════ -->
   <section class="shop-hero">
     <p class="section-eyebrow">The full collection</p>
     <h1>Find your<br><em>perfect glow.</em></h1>
@@ -54,21 +257,18 @@
   </section>
 
   <section class="products-section">
-
-    <!-- SEARCH -->
     <div class="shop-search">
       <input type="text" id="shopSearch" placeholder="Search products…" autocomplete="off">
       <button onclick="runSearch()">Search</button>
     </div>
     <p class="no-results" id="noResults">No products found. Try a different search.</p>
 
-    <!-- TABS -->
     <div class="shop-tabs" id="shopTabs">
       <button class="shop-tab active" data-tab="perfume">Perfumes</button>
       <button class="shop-tab" data-tab="lotion">Body Lotions</button>
     </div>
 
-    <!-- PERFUMES -->
+    <!-- ══ PERFUMES ══════════════════════════════════════════ -->
     <div class="shop-category-section" data-tab="perfume" id="perfumes">
       <div class="category-header">
         <h2>Perfumes</h2>
@@ -83,118 +283,253 @@
       </div>
       <div class="product-grid" id="perfumeGrid">
 
-        <div class="product-card" data-perfume-cat="floral" data-search="rose velvet edp floral perfume">
+        <!-- Sauvage -->
+        <div class="product-card"
+             data-perfume-cat="floral"
+             data-search="Sauvage Dior perfume"
+             data-name="Sauvage Scent"
+             data-price="25000"
+             data-image="perfume product/sauvage.jpg"
+             data-desc="Soft rose petals, warm musk, a whisper of oud — lasts all day"
+             data-badge="New">
           <div class="product-img-wrap">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#FFD6E4,#F7CDD8);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🌸</div>
-            <div class="product-overlay"><button class="quick-add" data-name="Rose Velvet EDP" data-price="25000" data-image="">Quick Add</button></div>
+            <img src="perfume product/sauvage.jpg" alt="Sauvage Scent"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🌸<span>Sauvage Scent</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Sauvage Scent" data-price="25000" data-image="perfume product/sauvage.jpg">Quick Add</button></div>
             <span class="product-badge">New</span>
           </div>
           <div class="product-info">
-            <h3>Rose Velvet EDP</h3>
+            <h3>Sauvage Scent</h3>
             <p class="product-desc">Soft rose petals, warm musk, a whisper of oud — lasts all day</p>
-            <div class="product-rating-row" id="rating-Rose Velvet EDP"></div>
+            <div class="product-rating-row" id="rating-Sauvage Scent"></div>
             <div class="product-footer">
               <span class="product-price">₦25,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Rose Velvet EDP" data-price="25000" data-image="">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Rose Velvet EDP" data-price="25000" data-image=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Sauvage Scent" data-price="25000" data-image="perfume product/sauvage.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Sauvage Scent" data-price="25000" data-image="perfume product/sauvage.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-perfume-cat="oriental" data-search="golden oud intense oriental perfume">
+        <!-- 9PM -->
+        <div class="product-card"
+             data-perfume-cat="oriental"
+             data-search="9PM Afnan perfume scent"
+             data-name="9PM Perfume scent"
+             data-price="45000"
+             data-image="perfume product/9pm.jpg"
+             data-desc="Rich oud, amber & vanilla — bold, lingering, unforgettable"
+             data-badge="Bestseller">
           <div class="product-img-wrap">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#F5D79E,#E8C27A);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">✨</div>
-            <div class="product-overlay"><button class="quick-add" data-name="Golden Oud Intense" data-price="45000" data-image="">Quick Add</button></div>
+            <img src="perfume product/9pm.jpg" alt="9PM Perfume scent"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🌑<span>9PM Perfume scent</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="9PM Perfume scent" data-price="45000" data-image="perfume product/9pm.jpg">Quick Add</button></div>
             <span class="product-badge">Bestseller</span>
           </div>
           <div class="product-info">
-            <h3>Golden Oud Intense</h3>
+            <h3>9PM Perfume scent</h3>
             <p class="product-desc">Rich oud, amber & vanilla — bold, lingering, unforgettable</p>
-            <div class="product-rating-row" id="rating-Golden Oud Intense"></div>
+            <div class="product-rating-row" id="rating-9PM Perfume scent"></div>
             <div class="product-footer">
               <span class="product-price">₦45,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Golden Oud Intense" data-price="45000" data-image="">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Golden Oud Intense" data-price="45000" data-image=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="9PM Perfume scent" data-price="45000" data-image="perfume product/9pm.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="9PM Perfume scent" data-price="45000" data-image="perfume product/9pm.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-perfume-cat="fresh" data-search="aqua citrus splash fresh perfume">
+        <!-- Bellaveta -->
+        <div class="product-card"
+             data-perfume-cat="fresh"
+             data-search="Bellaveta fresh perfume Bella Vita"
+             data-name="Bellaveta Scent"
+             data-price="18000"
+             data-image="perfume product/bellaveta.jpg"
+             data-desc="Bergamot, lime & ocean breeze — light, clean, energising"
+             data-badge="">
           <div class="product-img-wrap">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#C8EAF5,#A8D8EA);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🌊</div>
-            <div class="product-overlay"><button class="quick-add" data-name="Aqua Citrus Splash" data-price="18000" data-image="">Quick Add</button></div>
+            <img src="perfume product/bellaveta.jpg" alt="Bellaveta Scent"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🌊<span>Bellaveta Scent</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Bellaveta Scent" data-price="18000" data-image="perfume product/bellaveta.jpg">Quick Add</button></div>
           </div>
           <div class="product-info">
-            <h3>Aqua Citrus Splash</h3>
+            <h3>Bellaveta Scent</h3>
             <p class="product-desc">Bergamot, lime & ocean breeze — light, clean, energising</p>
-            <div class="product-rating-row" id="rating-Aqua Citrus Splash"></div>
+            <div class="product-rating-row" id="rating-Bellaveta Scent"></div>
             <div class="product-footer">
               <span class="product-price">₦18,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Aqua Citrus Splash" data-price="18000" data-image="">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Aqua Citrus Splash" data-price="18000" data-image=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Bellaveta Scent" data-price="18000" data-image="perfume product/bellaveta.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Bellaveta Scent" data-price="18000" data-image="perfume product/bellaveta.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-perfume-cat="woody" data-search="cedarwood noir woody perfume">
+        <!-- Versace -->
+        <div class="product-card"
+             data-perfume-cat="woody"
+             data-search="Versace Bright Crystal perfume"
+             data-name="Versace Perfume"
+             data-price="32000"
+             data-image="perfume product/versace.jpg"
+             data-desc="Smoky cedarwood, sandalwood & dark patchouli — sultry & earthy"
+             data-badge="">
           <div class="product-img-wrap">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#D4B896,#A0826D);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🌲</div>
-            <div class="product-overlay"><button class="quick-add" data-name="Cedarwood Noir" data-price="32000" data-image="">Quick Add</button></div>
+            <img src="perfume product/versace.jpg" alt="Versace Perfume"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🌲<span>Versace Perfume</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Versace Perfume" data-price="32000" data-image="perfume product/versace.jpg">Quick Add</button></div>
           </div>
           <div class="product-info">
-            <h3>Cedarwood Noir</h3>
+            <h3>Versace Perfume</h3>
             <p class="product-desc">Smoky cedarwood, sandalwood & dark patchouli — sultry & earthy</p>
-            <div class="product-rating-row" id="rating-Cedarwood Noir"></div>
+            <div class="product-rating-row" id="rating-Versace Perfume"></div>
             <div class="product-footer">
               <span class="product-price">₦32,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Cedarwood Noir" data-price="32000" data-image="">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Cedarwood Noir" data-price="32000" data-image=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Versace Perfume" data-price="32000" data-image="perfume product/versace.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Versace Perfume" data-price="32000" data-image="perfume product/versace.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-perfume-cat="floral" data-search="lavender dreams edt floral perfume">
+        <!-- Flower -->
+        <div class="product-card"
+             data-perfume-cat="floral"
+             data-search="Flower floral perfume"
+             data-name="Flower Perfume"
+             data-price="22000"
+             data-image="perfume product/flower.jpg"
+             data-desc="French lavender, jasmine & powdery iris — calm and feminine"
+             data-badge="">
           <div class="product-img-wrap">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#E8D5F5,#C9A8E0);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">💜</div>
-            <div class="product-overlay"><button class="quick-add" data-name="Lavender Dreams EDT" data-price="22000" data-image="">Quick Add</button></div>
+            <img src="perfume product/flower.jpg" alt="Flower Perfume"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">💜<span>Flower Perfume</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Flower Perfume" data-price="22000" data-image="perfume product/flower.jpg">Quick Add</button></div>
           </div>
           <div class="product-info">
-            <h3>Lavender Dreams EDT</h3>
+            <h3>Flower Perfume</h3>
             <p class="product-desc">French lavender, jasmine & powdery iris — calm and feminine</p>
-            <div class="product-rating-row" id="rating-Lavender Dreams EDT"></div>
+            <div class="product-rating-row" id="rating-Flower Perfume"></div>
             <div class="product-footer">
               <span class="product-price">₦22,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Lavender Dreams EDT" data-price="22000" data-image="">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Lavender Dreams EDT" data-price="22000" data-image=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Flower Perfume" data-price="22000" data-image="perfume product/flower.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Flower Perfume" data-price="22000" data-image="perfume product/flower.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-perfume-cat="oriental" data-search="amber silk parfum oriental perfume">
+        <!-- Channel (Bleu de Chanel) -->
+        <div class="product-card"
+             data-perfume-cat="oriental"
+             data-search="Bleu de Chanel oriental perfume"
+             data-name="Channel Perfume"
+             data-price="55000"
+             data-image="perfume product/channel.jpg"
+             data-desc="Warm amber, benzoin & silk musk — addictive, long-lasting"
+             data-badge="Top Rated">
           <div class="product-img-wrap">
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#F5E6C8,#E8C27A);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🕌</div>
-            <div class="product-overlay"><button class="quick-add" data-name="Amber Silk Parfum" data-price="55000" data-image="">Quick Add</button></div>
+            <img src="perfume product/channel.jpg" alt="Channel Perfume"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🕌<span>Channel Perfume</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Channel Perfume" data-price="55000" data-image="perfume product/channel.jpg">Quick Add</button></div>
             <span class="product-badge">Top Rated</span>
           </div>
           <div class="product-info">
-            <h3>Amber Silk Parfum</h3>
+            <h3>Channel Perfume</h3>
             <p class="product-desc">Warm amber, benzoin & silk musk — addictive, long-lasting</p>
-            <div class="product-rating-row" id="rating-Amber Silk Parfum"></div>
+            <div class="product-rating-row" id="rating-Channel Perfume"></div>
             <div class="product-footer">
               <span class="product-price">₦55,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Amber Silk Parfum" data-price="55000" data-image="">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Amber Silk Parfum" data-price="55000" data-image=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Channel Perfume" data-price="55000" data-image="perfume product/channel.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Channel Perfume" data-price="55000" data-image="perfume product/channel.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW: Chopard Agar Royal -->
+        <div class="product-card"
+             data-perfume-cat="oriental"
+             data-search="Chopard Agar Royal Collection perfume"
+             data-name="Chopard Agar Royal"
+             data-price="60000"
+             data-image="perfume product/chepad.jpg"
+             data-desc="Smoky agarwood, saffron & royal amber — opulent and richly layered"
+             data-badge="New">
+          <div class="product-img-wrap">
+            <img src="perfume product/chepad.jpg" alt="Chopard Agar Royal"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">💎<span>Chopard Agar Royal</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Chopard Agar Royal" data-price="60000" data-image="perfume product/chepad.jpg">Quick Add</button></div>
+            <span class="product-badge new">New</span>
+          </div>
+          <div class="product-info">
+            <h3>Chopard Agar Royal</h3>
+            <p class="product-desc">Smoky agarwood, saffron & royal amber — opulent and richly layered</p>
+            <div class="product-rating-row" id="rating-Chopard Agar Royal"></div>
+            <div class="product-footer">
+              <span class="product-price">₦60,000</span>
+              <div class="product-actions">
+                <button class="wish-btn" data-name="Chopard Agar Royal" data-price="60000" data-image="perfume product/chepad.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Chopard Agar Royal" data-price="60000" data-image="perfume product/chepad.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW: Zara Man -->
+        <div class="product-card"
+             data-perfume-cat="woody"
+             data-search="Zara Man perfume eau de parfum"
+             data-name="Zara Man"
+             data-price="20000"
+             data-image="perfume product/zara.jpg"
+             data-desc="Crisp citrus opening into warm woods & spice — sharp, modern, confident"
+             data-badge="">
+          <div class="product-img-wrap">
+            <img src="perfume product/zara.jpg" alt="Zara Man"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🖤<span>Zara Man</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Zara Man" data-price="20000" data-image="perfume product/zara.jpg">Quick Add</button></div>
+          </div>
+          <div class="product-info">
+            <h3>Zara Man</h3>
+            <p class="product-desc">Crisp citrus opening into warm woods & spice — sharp, modern, confident</p>
+            <div class="product-rating-row" id="rating-Zara Man"></div>
+            <div class="product-footer">
+              <span class="product-price">₦20,000</span>
+              <div class="product-actions">
+                <button class="wish-btn" data-name="Zara Man" data-price="20000" data-image="perfume product/zara.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Zara Man" data-price="20000" data-image="perfume product/zara.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
@@ -203,7 +538,7 @@
       </div>
     </div>
 
-    <!-- BODY LOTIONS -->
+    <!-- ══ BODY LOTIONS ══════════════════════════════════════ -->
     <div class="shop-category-section" data-tab="lotion" id="lotions" style="display:none;">
       <div class="category-header">
         <h2>Body Lotions</h2>
@@ -218,156 +553,252 @@
       </div>
       <div class="product-grid" id="lotionGrid">
 
-        <div class="product-card" data-lotion-cat="butter-l" data-search="shea glow body butter moisturizer lotion">
+        <!-- Aveeno -->
+        <div class="product-card"
+             data-lotion-cat="sensitive-l"
+             data-search="Aveeno daily moisturizing lotion fragrance free oat"
+             data-name="Aveeno Daily Moisturizing Lotion"
+             data-price="7000"
+             data-image="bodylotion product/aveeno_bl.jpg"
+             data-desc="Fragrance-free, colloidal oatmeal formula that moisturizes for 24 hours — gentle on sensitive skin"
+             data-badge="Bestseller">
           <div class="product-img-wrap">
-            <img src="product 1.jpg" alt="Shea Glow Body Butter" loading="lazy">
-            <div class="product-overlay"><button class="quick-add" data-name="Shea Glow Body Butter" data-price="7000" data-image="product 1.jpg">Quick Add</button></div>
+            <img src="bodylotion product/aveeno_bl.jpg" alt="Aveeno Daily Moisturizing Lotion" loading="lazy"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🧴<span>Aveeno Daily Moisturizing Lotion</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Aveeno Daily Moisturizing Lotion" data-price="7000" data-image="bodylotion product/aveeno_bl.jpg">Quick Add</button></div>
             <span class="product-badge">Bestseller</span>
           </div>
           <div class="product-info">
-            <h3>Shea Glow Body Butter</h3>
-            <p class="product-desc">Rich shea & cocoa butter blend for deep moisturization</p>
-            <div class="product-rating-row" id="rating2-Shea Glow Body Butter"></div>
+            <h3>Aveeno Daily Moisturizing Lotion</h3>
+            <p class="product-desc">Fragrance-free formula with colloidal oatmeal for 24-hour hydration</p>
+            <div class="product-rating-row" id="rating2-Aveeno Daily Moisturizing Lotion"></div>
             <div class="product-footer">
               <span class="product-price">₦7,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Shea Glow Body Butter" data-price="7000" data-image="product 1.jpg">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Shea Glow Body Butter" data-price="7000" data-image="product 1.jpg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Aveeno Daily Moisturizing Lotion" data-price="7000" data-image="bodylotion product/aveeno_bl.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Aveeno Daily Moisturizing Lotion" data-price="7000" data-image="bodylotion product/aveeno_bl.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-lotion-cat="glow-l" data-search="golden hour glow cream illuminating lotion">
+        <!-- EOS Cashmere Set -->
+        <div class="product-card"
+             data-lotion-cat="butter-l"
+             data-search="EOS shea better cashmere vanilla body lotion oil butter set"
+             data-name="EOS Shea Better Cashmere Set"
+             data-price="9000"
+             data-image="bodylotion product/cashmere_bl.jpg"
+             data-desc="Vanilla cashmere trio — body lotion, body oil & whipped butter with 7 nourishing oils"
+             data-badge="">
           <div class="product-img-wrap">
-            <img src="product 2.jpg" alt="Golden Hour Glow Cream" loading="lazy">
-            <div class="product-overlay"><button class="quick-add" data-name="Golden Hour Glow Cream" data-price="9000" data-image="product 2.jpg">Quick Add</button></div>
+            <img src="bodylotion product/cashmere_bl.jpg" alt="EOS Shea Better Cashmere Set" loading="lazy"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">✨<span>EOS Shea Better Cashmere Set</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="EOS Shea Better Cashmere Set" data-price="9000" data-image="bodylotion product/cashmere_bl.jpg">Quick Add</button></div>
           </div>
           <div class="product-info">
-            <h3>Golden Hour Glow Cream</h3>
-            <p class="product-desc">Illuminating formula with gold micro-particles</p>
-            <div class="product-rating-row" id="rating2-Golden Hour Glow Cream"></div>
+            <h3>EOS Cashmere Set</h3>
+            <p class="product-desc">Vanilla cashmere lotion, oil & whipped butter trio for total-body care</p>
+            <div class="product-rating-row" id="rating2-EOS Shea Better Cashmere Set"></div>
             <div class="product-footer">
               <span class="product-price">₦9,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Golden Hour Glow Cream" data-price="9000" data-image="product 2.jpg">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Golden Hour Glow Cream" data-price="9000" data-image="product 2.jpg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="EOS Shea Better Cashmere Set" data-price="9000" data-image="bodylotion product/cashmere_bl.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="EOS Shea Better Cashmere Set" data-price="9000" data-image="bodylotion product/cashmere_bl.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-lotion-cat="brightening-l" data-search="vitamin c brightening cream niacinamide lotion">
+        <!-- Dove Ultra Restorative -->
+        <div class="product-card"
+             data-lotion-cat="brightening-l"
+             data-search="Dove ultra restorative ceramide body lotion"
+             data-name="Dove Ultra Restorative Lotion"
+             data-price="8500"
+             data-image="bodylotion product/dove_bl.jpg"
+             data-desc="Restoring ceramide serum visibly repairs & strengthens skin barrier for 48-hour moisture"
+             data-badge="New">
           <div class="product-img-wrap">
-            <img src="product 3.jpg" alt="Vitamin C Brightening Cream" loading="lazy">
-            <div class="product-overlay"><button class="quick-add" data-name="Vitamin C Brightening Cream" data-price="56000" data-image="product 3.jpg">Quick Add</button></div>
+            <img src="bodylotion product/dove_bl.jpg" alt="Dove Ultra Restorative Lotion" loading="lazy"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🤍<span>Dove Ultra Restorative Lotion</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Dove Ultra Restorative Lotion" data-price="8500" data-image="bodylotion product/dove_bl.jpg">Quick Add</button></div>
             <span class="product-badge new">New</span>
           </div>
           <div class="product-info">
-            <h3>Vitamin C Brightening Cream</h3>
-            <p class="product-desc">Even skin tone with potent Vitamin C & niacinamide</p>
-            <div class="product-rating-row" id="rating2-Vitamin C Brightening Cream"></div>
+            <h3>Dove Ultra Restorative Lotion</h3>
+            <p class="product-desc">Ceramide serum that restores & strengthens skin's barrier for 48 hours</p>
+            <div class="product-rating-row" id="rating2-Dove Ultra Restorative Lotion"></div>
             <div class="product-footer">
-              <span class="product-price">₦56,000</span>
+              <span class="product-price">₦8,500</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Vitamin C Brightening Cream" data-price="56000" data-image="product 3.jpg">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Vitamin C Brightening Cream" data-price="56000" data-image="product 3.jpg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Dove Ultra Restorative Lotion" data-price="8500" data-image="bodylotion product/dove_bl.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Dove Ultra Restorative Lotion" data-price="8500" data-image="bodylotion product/dove_bl.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-lotion-cat="butter-l" data-search="whipped mango butter hydration lotion">
+        <!-- Nivea Cherry Blossom -->
+        <div class="product-card"
+             data-lotion-cat="glow-l"
+             data-search="Nivea cherry blossom jojoba oil infused lotion"
+             data-name="Nivea Cherry Blossom Lotion"
+             data-price="6500"
+             data-image="bodylotion product/nivea_bl.jpg"
+             data-desc="Oil-infused lotion with cherry blossom scent & jojoba oil — transforms dry skin into smooth, radiant skin"
+             data-badge="">
           <div class="product-img-wrap">
-            <img src="product 4.jpg" alt="Whipped Mango Butter" loading="lazy">
-            <div class="product-overlay"><button class="quick-add" data-name="Whipped Mango Butter" data-price="100000" data-image="product 4.jpg">Quick Add</button></div>
+            <img src="bodylotion product/nivea_bl.jpg" alt="Nivea Cherry Blossom Lotion" loading="lazy"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🌸<span>Nivea Cherry Blossom Lotion</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Nivea Cherry Blossom Lotion" data-price="6500" data-image="bodylotion product/nivea_bl.jpg">Quick Add</button></div>
           </div>
           <div class="product-info">
-            <h3>Whipped Mango Butter</h3>
-            <p class="product-desc">Lightweight whipped butter for everyday hydration</p>
-            <div class="product-rating-row" id="rating2-Whipped Mango Butter"></div>
+            <h3>Nivea Cherry Blossom Lotion</h3>
+            <p class="product-desc">Oil-infused lotion with cherry blossom & jojoba oil for radiant skin</p>
+            <div class="product-rating-row" id="rating2-Nivea Cherry Blossom Lotion"></div>
             <div class="product-footer">
-              <span class="product-price">₦100,000</span>
+              <span class="product-price">₦6,500</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Whipped Mango Butter" data-price="100000" data-image="product 4.jpg">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Whipped Mango Butter" data-price="100000" data-image="product 4.jpg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Nivea Cherry Blossom Lotion" data-price="6500" data-image="bodylotion product/nivea_bl.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Nivea Cherry Blossom Lotion" data-price="6500" data-image="bodylotion product/nivea_bl.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-lotion-cat="glow-l" data-search="rose argan night cream rosehip repair lotion">
+        <!-- Olay 4-in-1 Set -->
+        <div class="product-card"
+             data-lotion-cat="glow-l"
+             data-search="Olay retinol niacinamide collagen vitamin c body lotion set"
+             data-name="Olay 4-in-1 Body Lotion Set"
+             data-price="18000"
+             data-image="bodylotion product/olay_bl.jpg"
+             data-desc="Retinol24, Niacinamide, Collagen Peptide & Vitamin C — four clinically-tested 24hr body lotions"
+             data-badge="">
           <div class="product-img-wrap">
-            <img src="product 5.jpg" alt="Rose & Argan Night Cream" loading="lazy">
-            <div class="product-overlay"><button class="quick-add" data-name="Rose & Argan Night Cream" data-price="200000" data-image="product 5.jpg">Quick Add</button></div>
+            <img src="bodylotion product/olay_bl.jpg" alt="Olay 4-in-1 Body Lotion Set" loading="lazy"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🌙<span>Olay 4-in-1 Body Lotion Set</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Olay 4-in-1 Body Lotion Set" data-price="18000" data-image="bodylotion product/olay_bl.jpg">Quick Add</button></div>
           </div>
           <div class="product-info">
-            <h3>Rose & Argan Night Cream</h3>
-            <p class="product-desc">Overnight repair with rosehip & argan oil complex</p>
-            <div class="product-rating-row" id="rating2-Rose & Argan Night Cream"></div>
+            <h3>Olay 4-in-1 Lotion Set</h3>
+            <p class="product-desc">Retinol24, Niacinamide, Collagen Peptide & Vitamin C — four clinically-tested formulas</p>
+            <div class="product-rating-row" id="rating2-Olay 4-in-1 Body Lotion Set"></div>
             <div class="product-footer">
-              <span class="product-price">₦200,000</span>
+              <span class="product-price">₦18,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Rose & Argan Night Cream" data-price="200000" data-image="product 5.jpg">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Rose & Argan Night Cream" data-price="200000" data-image="product 5.jpg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Olay 4-in-1 Body Lotion Set" data-price="18000" data-image="bodylotion product/olay_bl.jpg">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Olay 4-in-1 Body Lotion Set" data-price="18000" data-image="bodylotion product/olay_bl.jpg">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-lotion-cat="brightening-l" data-search="pearl luminance body lotion radiant skin">
+        <!-- Dark Kiss -->
+        <div class="product-card"
+             data-lotion-cat="brightening-l"
+             data-search="Dark Kiss Bath Body Works shea butter coconut oil lotion"
+             data-name="Dark Kiss Body Lotion"
+             data-price="9500"
+             data-image="bodylotion product/darkkiss_bl.webp"
+             data-desc="Daily nourishing lotion with shea butter & coconut oil — 48-hour moisture, deep floral scent"
+             data-badge="">
           <div class="product-img-wrap">
-            <img src="product 6.jpg" alt="Pearl Luminance Body Lotion" loading="lazy">
-            <div class="product-overlay"><button class="quick-add" data-name="Pearl Luminance Body Lotion" data-price="300000" data-image="product 6.jpg">Quick Add</button></div>
+            <img src="bodylotion product/darkkiss_bl.webp" alt="Dark Kiss Body Lotion" loading="lazy"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🖤<span>Dark Kiss Body Lotion</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Dark Kiss Body Lotion" data-price="9500" data-image="bodylotion product/darkkiss_bl.webp">Quick Add</button></div>
           </div>
           <div class="product-info">
-            <h3>Pearl Luminance Lotion</h3>
-            <p class="product-desc">Silky lotion with pearl powder for radiant skin</p>
-            <div class="product-rating-row" id="rating2-Pearl Luminance Body Lotion"></div>
+            <h3>Dark Kiss Body Lotion</h3>
+            <p class="product-desc">Shea butter & coconut oil blend with 48-hour moisture and a deep floral scent</p>
+            <div class="product-rating-row" id="rating2-Dark Kiss Body Lotion"></div>
             <div class="product-footer">
-              <span class="product-price">₦300,000</span>
+              <span class="product-price">₦9,500</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Pearl Luminance Body Lotion" data-price="300000" data-image="product 6.jpg">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Pearl Luminance Body Lotion" data-price="300000" data-image="product 6.jpg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Dark Kiss Body Lotion" data-price="9500" data-image="bodylotion product/darkkiss_bl.webp">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Dark Kiss Body Lotion" data-price="9500" data-image="bodylotion product/darkkiss_bl.webp">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-lotion-cat="sensitive-l" data-search="oat aloe calm cream sensitive skin fragrance free">
+        <!-- Gold Bond Crepe Corrector -->
+        <div class="product-card"
+             data-lotion-cat="glow-l"
+             data-search="Gold Bond Crepe Corrector Age Renew body lotion"
+             data-name="Gold Bond Crepe Corrector"
+             data-price="12000"
+             data-image="bodylotion product/goldbond_bl.webp"
+             data-desc="7 moisturizers & 3 vitamins with omega-fatty acids, antioxidants & botanicals — firms & renews crepey skin"
+             data-badge="Top Rated">
           <div class="product-img-wrap">
-            <img src="product 7.jpg" alt="Oat & Aloe Calm Cream" loading="lazy">
-            <div class="product-overlay"><button class="quick-add" data-name="Oat & Aloe Calm Cream" data-price="500000" data-image="product 7.jpg">Quick Add</button></div>
+            <img src="bodylotion product/goldbond_bl.webp" alt="Gold Bond Crepe Corrector" loading="lazy"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder">🌿<span>Gold Bond Crepe Corrector</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Gold Bond Crepe Corrector" data-price="12000" data-image="bodylotion product/goldbond_bl.webp">Quick Add</button></div>
             <span class="product-badge">Top Rated</span>
           </div>
           <div class="product-info">
-            <h3>Oat & Aloe Calm Cream</h3>
-            <p class="product-desc">Fragrance-free formula for sensitive & reactive skin</p>
-            <div class="product-rating-row" id="rating2-Oat & Aloe Calm Cream"></div>
+            <h3>Gold Bond Crepe Corrector</h3>
+            <p class="product-desc">Age Renew formula with omega-fatty acids, antioxidants & botanicals</p>
+            <div class="product-rating-row" id="rating2-Gold Bond Crepe Corrector"></div>
             <div class="product-footer">
-              <span class="product-price">₦500,000</span>
+              <span class="product-price">₦12,000</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Oat & Aloe Calm Cream" data-price="500000" data-image="product 7.jpg">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Oat & Aloe Calm Cream" data-price="500000" data-image="product 7.jpg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Gold Bond Crepe Corrector" data-price="12000" data-image="bodylotion product/goldbond_bl.webp">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Gold Bond Crepe Corrector" data-price="12000" data-image="bodylotion product/goldbond_bl.webp">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="product-card" data-lotion-cat="butter-l" data-search="coconut dream body butter tropical vanilla">
+        <!-- Coconut Dream (no photo supplied — emoji placeholder) -->
+        <div class="product-card"
+             data-lotion-cat="butter-l"
+             data-search="coconut dream body butter tropical vanilla"
+             data-name="Coconut Dream Body Butter"
+             data-price="7500"
+             data-image=""
+             data-desc="Tropical coconut & vanilla blend for silky soft skin"
+             data-badge="">
           <div class="product-img-wrap">
-            <img src="product 8.jpg" alt="Coconut Dream Body Butter" loading="lazy">
-            <div class="product-overlay"><button class="quick-add" data-name="Coconut Dream Body Butter" data-price="100000" data-image="product 8.jpg">Quick Add</button></div>
+            <img src="" alt="Coconut Dream Body Butter" loading="lazy"
+                 onerror="this.classList.add('img-error');this.style.display='none';this.nextElementSibling.classList.add('show')">
+            <div class="img-placeholder show">🥥<span>Coconut Dream Body Butter</span></div>
+            <div class="product-overlay"><button class="quick-add" data-name="Coconut Dream Body Butter" data-price="7500" data-image="">Quick Add</button></div>
           </div>
           <div class="product-info">
             <h3>Coconut Dream Body Butter</h3>
             <p class="product-desc">Tropical coconut & vanilla blend for silky soft skin</p>
             <div class="product-rating-row" id="rating2-Coconut Dream Body Butter"></div>
             <div class="product-footer">
-              <span class="product-price">₦100,000</span>
+              <span class="product-price">₦7,500</span>
               <div class="product-actions">
-                <button class="wish-btn" data-name="Coconut Dream Body Butter" data-price="100000" data-image="product 8.jpg">♡</button>
-                <button class="add-to-cart icon-cart" data-name="Coconut Dream Body Butter" data-price="100000" data-image="product 8.jpg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
+                <button class="wish-btn" data-name="Coconut Dream Body Butter" data-price="7500" data-image="">♡</button>
+                <button class="add-to-cart icon-cart" data-name="Coconut Dream Body Butter" data-price="7500" data-image="">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </button>
               </div>
             </div>
           </div>
@@ -385,65 +816,41 @@
         <h2 class="section-title">Bundle deals</h2>
       </div>
       <div class="bundle-grid">
-
         <div class="bundle-card">
           <span class="bundle-save">Save ₦5,000</span>
           <h3>The Glow Starter Kit</h3>
           <p>Perfect for first-timers. Get the essentials to start your glow journey.</p>
           <ul class="bundle-items">
-            <li>Shea Glow Body Butter (₦7,000)</li>
-            <li>Golden Hour Glow Cream (₦9,000)</li>
-            <li>Aqua Citrus Splash Perfume (₦18,000)</li>
+            <li>Aveeno Daily Moisturizing Lotion (₦7,000)</li>
+            <li>EOS Cashmere Set (₦9,000)</li>
+            <li>Bellaveta Scent (₦18,000)</li>
           </ul>
-          <div class="bundle-price">
-            <span class="new-price">₦29,000</span>
-            <span class="old-price">₦34,000</span>
-          </div>
-          <button class="bundle-add" onclick="addBundle([
-            {name:'Shea Glow Body Butter',price:7000,image:'product 1.jpg'},
-            {name:'Golden Hour Glow Cream',price:9000,image:'product 2.jpg'},
-            {name:'Aqua Citrus Splash',price:18000,image:''}
-          ])">Add Bundle to Cart</button>
+          <div class="bundle-price"><span class="new-price">₦29,000</span><span class="old-price">₦34,000</span></div>
+          <button class="bundle-add" onclick="addBundle([{name:'Aveeno Daily Moisturizing Lotion',price:7000,image:'bodylotion product/aveeno_bl.jpg'},{name:'EOS Shea Better Cashmere Set',price:9000,image:'bodylotion product/cashmere_bl.jpg'},{name:'Bellaveta Scent',price:18000,image:'perfume product/bellaveta.jpg'}])">Add Bundle to Cart</button>
         </div>
-
         <div class="bundle-card">
           <span class="bundle-save">Save ₦12,000</span>
           <h3>The Luxury Night Ritual</h3>
           <p>Pamper your skin while you sleep with our most indulgent formula combination.</p>
           <ul class="bundle-items">
-            <li>Rose & Argan Night Cream (₦200,000)</li>
-            <li>Vitamin C Brightening Cream (₦56,000)</li>
-            <li>Lavender Dreams EDT (₦22,000)</li>
+            <li>Olay 4-in-1 Lotion Set (₦200,000)</li>
+            <li>Dove Ultra Restorative Lotion (₦56,000)</li>
+            <li>Flower Perfume (₦22,000)</li>
           </ul>
-          <div class="bundle-price">
-            <span class="new-price">₦266,000</span>
-            <span class="old-price">₦278,000</span>
-          </div>
-          <button class="bundle-add" onclick="addBundle([
-            {name:'Rose & Argan Night Cream',price:200000,image:'product 5.jpg'},
-            {name:'Vitamin C Brightening Cream',price:56000,image:'product 3.jpg'},
-            {name:'Lavender Dreams EDT',price:22000,image:''}
-          ])">Add Bundle to Cart</button>
+          <div class="bundle-price"><span class="new-price">₦266,000</span><span class="old-price">₦278,000</span></div>
+          <button class="bundle-add" onclick="addBundle([{name:'Olay 4-in-1 Body Lotion Set',price:200000,image:'bodylotion product/olay_bl.jpg'},{name:'Dove Ultra Restorative Lotion',price:56000,image:'bodylotion product/dove_bl.jpg'},{name:'Flower Perfume',price:22000,image:'perfume product/flower.jpg'}])">Add Bundle to Cart</button>
         </div>
-
         <div class="bundle-card">
           <span class="bundle-save">Save ₦8,000</span>
           <h3>The Sensitive Skin Set</h3>
           <p>Gentle, fragrance-free picks specially curated for reactive and delicate skin.</p>
           <ul class="bundle-items">
-            <li>Oat & Aloe Calm Cream (₦500,000)</li>
-            <li>Whipped Mango Butter (₦100,000)</li>
+            <li>Gold Bond Crepe Corrector (₦500,000)</li>
+            <li>Nivea Cherry Blossom Lotion (₦100,000)</li>
           </ul>
-          <div class="bundle-price">
-            <span class="new-price">₦592,000</span>
-            <span class="old-price">₦600,000</span>
-          </div>
-          <button class="bundle-add" onclick="addBundle([
-            {name:'Oat & Aloe Calm Cream',price:500000,image:'product 7.jpg'},
-            {name:'Whipped Mango Butter',price:100000,image:'product 4.jpg'}
-          ])">Add Bundle to Cart</button>
+          <div class="bundle-price"><span class="new-price">₦592,000</span><span class="old-price">₦600,000</span></div>
+          <button class="bundle-add" onclick="addBundle([{name:'Gold Bond Crepe Corrector',price:500000,image:'bodylotion product/goldbond_bl.webp'},{name:'Nivea Cherry Blossom Lotion',price:100000,image:'bodylotion product/nivea_bl.jpg'}])">Add Bundle to Cart</button>
         </div>
-
       </div>
     </div>
   </section>
@@ -453,16 +860,21 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="logo">
-          <img src="glow-logo.png" alt="Glow Co." class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="logo-mark" style="display:none;">G</div>
+        <a href="home.html" class="logo">
+          <div class="logo-img-wrap">
+            <img src="logo.jpeg" alt="Glow Co."
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="logo-mark" style="display:none;">G</div>
+          </div>
           low Co<span class="logo-dot">.</span>
         </a>
-        <p>Premium body creams, perfumes<br>& lotions for every skin type.</p>
+        <p>Premium body creams, perfumes<br>&amp; lotions for every skin type.</p>
       </div>
       <div class="footer-links">
         <h4>Shop</h4>
         <a href="shop.html">All Products</a>
+        <a href="shop.html#perfumes">Perfumes</a>
+        <a href="shop.html#lotions">Body Lotions</a>
         <a href="cart.html">Your Cart</a>
         <a href="wishlist.html">Wishlist</a>
       </div>
@@ -480,12 +892,14 @@
         <a href="https://www.tiktok.com" target="_blank">TikTok</a>
       </div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2025 Glow Co. All rights reserved.</p></div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Glow Co. All rights reserved.</p>
+    </div>
   </footer>
 
   <script src="main.js"></script>
   <script>
-    // Tab switching
+    // ── Tab switching ──────────────────────────────────────────
     document.querySelectorAll('.shop-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('active'));
@@ -496,9 +910,9 @@
       });
     });
 
-    // Category filters
+    // ── Category filters ───────────────────────────────────────
     document.querySelectorAll('.shop-category-section').forEach(sec => {
-      const bar = sec.querySelector('.filter-bar');
+      const bar  = sec.querySelector('.filter-bar');
       const grid = sec.querySelector('.product-grid');
       if (!bar || !grid) return;
       const allKey = sec.dataset.tab === 'perfume' ? 'all-p' : 'all-l';
@@ -515,7 +929,7 @@
       });
     });
 
-    // Search
+    // ── Search ─────────────────────────────────────────────────
     function runSearch() {
       const q = document.getElementById('shopSearch').value.trim().toLowerCase();
       if (!q) {
@@ -536,10 +950,10 @@
     }
     document.getElementById('shopSearch').addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(); });
 
-    // URL hash
+    // ── URL hash ───────────────────────────────────────────────
     if (window.location.hash === '#lotions') document.querySelector('[data-tab="lotion"]').click();
 
-    // Bundle add
+    // ── Bundle add ─────────────────────────────────────────────
     function addBundle(items) {
       items.forEach(item => {
         const cart = getCart();
@@ -549,14 +963,81 @@
       showToast('🎁 Bundle added to cart!');
     }
 
-    // Back-in-stock WhatsApp alert
-    function notifyStock(productName) {
-      const msg = encodeURIComponent(`Hi Glow Co! Please notify me on WhatsApp when "${productName}" is back in stock. Thank you!`);
-      window.open('https://wa.me/qr/IEDMJTDBM3L6D1?text=' + msg, '_blank');
+    // ── LIGHTBOX (click card → view image; cart/wish buttons unaffected) ──
+    const lightbox   = document.getElementById('lightbox');
+    const lbImg      = document.getElementById('lbImg');
+    const lbFallback = document.getElementById('lbFallback');
+    const lbTitle    = document.getElementById('lbTitle');
+    const lbDesc     = document.getElementById('lbDesc');
+    const lbPrice    = document.getElementById('lbPrice');
+    const lbBadge    = document.getElementById('lbBadge');
+    const lbCartBtn  = document.getElementById('lbCartBtn');
+    const lbWishBtn  = document.getElementById('lbWishBtn');
+
+    function openLightbox(card) {
+      const name  = card.dataset.name;
+      const price = card.dataset.price;
+      const image = card.dataset.image || '';
+      const desc  = card.dataset.desc  || card.querySelector('.product-desc')?.textContent || '';
+      const badge = card.dataset.badge || '';
+
+      lbFallback.classList.remove('show');
+      if (image) {
+        lbImg.style.display = 'block';
+        lbImg.src = image;
+        lbImg.alt = name;
+        lbImg.onerror = () => {
+          lbImg.style.display = 'none';
+          lbFallback.classList.add('show');
+          lbFallback.textContent = '🧴';
+        };
+      } else {
+        lbImg.style.display = 'none';
+        lbFallback.classList.add('show');
+        lbFallback.textContent = '🧴';
+      }
+
+      lbTitle.textContent = name;
+      lbDesc.textContent  = desc;
+      lbPrice.textContent = '₦' + Number(price).toLocaleString('en-NG');
+
+      if (badge) { lbBadge.textContent = badge; lbBadge.classList.remove('hidden'); }
+      else { lbBadge.classList.add('hidden'); }
+
+      lbCartBtn.onclick = () => { addToCart({ name, price, image }); };
+
+      const wished = isWishlisted(name);
+      lbWishBtn.classList.toggle('wished', wished);
+      lbWishBtn.textContent = wished ? '♥' : '♡';
+      lbWishBtn.onclick = () => {
+        const active = toggleWishlist({ name, price, image });
+        lbWishBtn.classList.toggle('wished', active);
+        lbWishBtn.textContent = active ? '♥' : '♡';
+      };
+
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
 
-    // Render ratings
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
     document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', e => {
+          // Cart & wishlist buttons keep their own behavior — don't open lightbox for those
+          if (e.target.closest('button')) return;
+          openLightbox(card);
+        });
+      });
+
+      // Render ratings
       document.querySelectorAll('[id^="rating-"], [id^="rating2-"]').forEach(el => {
         const name = el.id.replace(/^rating2?-/, '');
         const r = getProductRating(name);

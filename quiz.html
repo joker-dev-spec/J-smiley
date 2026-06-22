@@ -11,14 +11,17 @@
 
   <header id="header" class="scrolled">
     <div class="header-inner">
-      <a href="index.html" class="logo">
-        <img src="glow-logo.png" alt="Glow Co." class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="logo-mark" style="display:none;">G</div>
+      <a href="home.html" class="logo">
+        <div class="logo-img-wrap">
+          <img src="logo.jpeg" alt="Glow Co."
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="logo-mark" style="display:none;">G</div>
+        </div>
         low Co<span class="logo-dot">.</span>
       </a>
       <nav>
         <ul>
-          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="home.html" class="nav-link">Home</a></li>
           <li><a href="shop.html" class="nav-link">Shop</a></li>
           <li><a href="quiz.html" class="nav-link active">Skin Quiz</a></li>
           <li><a href="about.html" class="nav-link">About</a></li>
@@ -113,18 +116,41 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="logo">
-          <img src="glow-logo.png" alt="Glow Co." class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="logo-mark" style="display:none;">G</div>
+        <a href="home.html" class="logo">
+          <div class="logo-img-wrap">
+            <img src="logo.jpeg" alt="Glow Co."
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="logo-mark" style="display:none;">G</div>
+          </div>
           low Co<span class="logo-dot">.</span>
         </a>
-        <p>Premium body creams, perfumes<br>& lotions for every skin type.</p>
+        <p>Premium body creams, perfumes<br>&amp; lotions for every skin type.</p>
       </div>
-      <div class="footer-links"><h4>Shop</h4><a href="shop.html">All Products</a><a href="cart.html">Your Cart</a></div>
-      <div class="footer-links"><h4>Company</h4><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="tracking.html">Track Order</a></div>
-      <div class="footer-links"><h4>Follow Us</h4><a href="https://wa.me/qr/IEDMJTDBM3L6D1" target="_blank">WhatsApp</a><a href="https://www.instagram.com/okunborjanet85/profilecard/?igsh=MmFnMDEzanFmMzA5" target="_blank">Instagram</a><a href="https://www.tiktok.com" target="_blank">TikTok</a></div>
+      <div class="footer-links">
+        <h4>Shop</h4>
+        <a href="shop.html">All Products</a>
+        <a href="shop.html#perfumes">Perfumes</a>
+        <a href="shop.html#lotions">Body Lotions</a>
+        <a href="cart.html">Your Cart</a>
+        <a href="wishlist.html">Wishlist</a>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="quiz.html">Skin Quiz</a>
+        <a href="tracking.html">Track Order</a>
+      </div>
+      <div class="footer-links">
+        <h4>Follow Us</h4>
+        <a href="https://wa.me/qr/IEDMJTDBM3L6D1" target="_blank">WhatsApp</a>
+        <a href="https://www.instagram.com/okunborjanet85/profilecard/?igsh=MmFnMDEzanFmMzA5" target="_blank">Instagram</a>
+        <a href="https://www.tiktok.com" target="_blank">TikTok</a>
+      </div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2025 Glow Co. All rights reserved.</p></div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Glow Co. All rights reserved.</p>
+    </div>
   </footer>
 
   <script src="main.js"></script>
@@ -132,24 +158,110 @@
     const answers = {};
     let currentStep = 1;
 
-    const PRODUCTS = {
-      sensitive: { name: 'Oat & Aloe Calm Cream', price: 500000, image: 'product 7.jpg', emoji: '🌸', desc: 'Your skin needs gentle, fragrance-free care. The Oat & Aloe Calm Cream is specifically formulated for reactive skin — zero irritants, maximum calm.' },
-      dry_moisture: { name: 'Shea Glow Body Butter', price: 7000, image: 'product 1.jpg', emoji: '🌿', desc: 'Your skin is craving deep, lasting moisture. The Shea Glow Body Butter melts into skin and locks in hydration for hours.' },
-      glow: { name: 'Golden Hour Glow Cream', price: 9000, image: 'product 2.jpg', emoji: '✨', desc: 'You want to light up the room! Golden Hour Glow Cream gives you that radiant, sun-kissed look morning or night.' },
-      even: { name: 'Vitamin C Brightening Cream', price: 56000, image: 'product 3.jpg', emoji: '🎯', desc: 'For a more even, luminous tone, Vitamin C Brightening Cream with niacinamide visibly fades spots and brightens your complexion over time.' },
-      night: { name: 'Rose & Argan Night Cream', price: 200000, image: 'product 5.jpg', emoji: '🌙', desc: 'You give your skin its best work at night. The Rose & Argan Night Cream repairs and rejuvenates while you sleep.' },
-      butter: { name: 'Whipped Mango Butter', price: 100000, image: 'product 4.jpg', emoji: '🥭', desc: 'Light enough for daily use but rich enough for thirsty skin — Whipped Mango Butter is your everyday hydration hero.' },
-    };
+    // ── Live product catalog, sourced from what's actually in shop.html ──
+    // Each product is tagged by skin type / concern / routine it genuinely suits,
+    // based on its real description. The quiz scores every product against the
+    // user's answers and recommends whichever one fits best — so recommendations
+    // always match what's really on sale.
+    // Product catalog — names, prices, and images must exactly match shop.html
+    const PRODUCTS = [
+      {
+        name: 'Aveeno Daily Moisturizing Lotion',
+        price: 7000,
+        image: 'bodylotion product/aveeno_bl.jpg',
+        emoji: '🌿',
+        desc: 'Fragrance-free, colloidal oatmeal formula that moisturizes for 24 hours — gentle on sensitive skin.',
+        skin: ['sensitive', 'dry'],
+        concern: ['calm', 'moisture'],
+        time: ['morning', 'both', 'whenever']
+      },
+      {
+        name: 'EOS Shea Better Cashmere Set',
+        price: 9000,
+        image: 'bodylotion product/cashmere_bl.jpg',
+        emoji: '✨',
+        desc: 'Vanilla cashmere trio — body lotion, body oil & whipped butter with 7 nourishing oils for daily softness.',
+        skin: ['dry', 'combo'],
+        concern: ['moisture'],
+        time: ['both', 'whenever']
+      },
+      {
+        name: 'Dove Ultra Restorative Lotion',
+        price: 8500,
+        image: 'bodylotion product/dove_bl.jpg',
+        emoji: '🤍',
+        desc: 'Restoring ceramide serum that visibly repairs & strengthens your skin barrier for 48-hour moisture.',
+        skin: ['sensitive', 'dry'],
+        concern: ['calm', 'even'],
+        time: ['night', 'both']
+      },
+      {
+        name: 'Nivea Cherry Blossom Lotion',
+        price: 6500,
+        image: 'bodylotion product/nivea_bl.jpg',
+        emoji: '🌸',
+        desc: 'Oil-infused lotion with cherry blossom scent & jojoba oil — transforms dry skin into smooth, radiant skin.',
+        skin: ['dry', 'oily', 'combo'],
+        concern: ['glow', 'moisture'],
+        time: ['morning', 'both']
+      },
+      {
+        name: 'Olay 4-in-1 Body Lotion Set',
+        price: 18000,
+        image: 'bodylotion product/olay_bl.jpg',
+        emoji: '🌙',
+        desc: 'Retinol24, Niacinamide, Collagen Peptide & Vitamin C — four clinically-tested 24hr formulas in one set.',
+        skin: ['dry', 'oily', 'combo'],
+        concern: ['even', 'glow'],
+        time: ['night', 'both']
+      },
+      {
+        name: 'Dark Kiss Body Lotion',
+        price: 9500,
+        image: 'bodylotion product/darkkiss_bl.webp',
+        emoji: '🖤',
+        desc: 'Shea butter & coconut oil blend with 48-hour moisture and a deep floral scent.',
+        skin: ['dry'],
+        concern: ['moisture', 'glow'],
+        time: ['night', 'whenever']
+      },
+      {
+        name: 'Gold Bond Crepe Corrector',
+        price: 12000,
+        image: 'bodylotion product/goldbond_bl.webp',
+        emoji: '🌿',
+        desc: 'Age Renew formula with omega-fatty acids, antioxidants & botanicals to firm and renew skin.',
+        skin: ['dry', 'combo'],
+        concern: ['even'],
+        time: ['night', 'both']
+      },
+      {
+        name: 'Coconut Dream Body Butter',
+        price: 7500,
+        image: 'bodylotion product/coconut_bl.jpg',
+        emoji: '🥥',
+        desc: 'Tropical coconut & vanilla blend for silky soft skin, any time of day.',
+        skin: ['dry'],
+        concern: ['moisture', 'glow'],
+        time: ['whenever', 'both']
+      },
+    ];
 
     function getRecommendation() {
       const skin = answers[1], concern = answers[2], time = answers[3];
-      if (skin === 'sensitive') return PRODUCTS.sensitive;
-      if (concern === 'even') return PRODUCTS.even;
-      if (concern === 'glow') return PRODUCTS.glow;
-      if (time === 'night') return PRODUCTS.night;
-      if (concern === 'moisture' && skin === 'dry') return PRODUCTS.dry_moisture;
-      if (concern === 'moisture') return PRODUCTS.butter;
-      return PRODUCTS.glow;
+
+      // Score every real product against the user's 3 answers.
+      // +2 for a skin-type match, +2 for a concern match, +1 for a routine match —
+      // concern carries equal weight to skin type since it's the most specific signal.
+      let best = null, bestScore = -1;
+      PRODUCTS.forEach(p => {
+        let score = 0;
+        if (p.skin.includes(skin)) score += 2;
+        if (p.concern.includes(concern)) score += 2;
+        if (p.time.includes(time)) score += 1;
+        if (score > bestScore) { bestScore = score; best = p; }
+      });
+      return best;
     }
 
     function answer(step, val) {

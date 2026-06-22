@@ -48,6 +48,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; line-height
 .logo-mark { width: 32px; height: 32px; background: var(--pink-soft); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--pink-deep); font-weight: 700; box-shadow: 0 0 0 4px rgba(244,184,203,0.25); }
 .logo-dot { color: var(--gold); }
 .logo-img { height: 38px; width: auto; object-fit: contain; display: block; }
+.logo-img-wrap { display: flex; align-items: center; height: 38px; width: 38px; flex-shrink: 0; }
+.logo-img-wrap img { height: 38px; width: 38px; object-fit: contain; border-radius: 4px; }
 
 /* ─── NAV ─────────────────────────────────── */
 header nav ul { list-style: none; display: flex; align-items: center; gap: 28px; }
@@ -250,6 +252,12 @@ footer { background: var(--plum); color: rgba(255,255,255,0.7); padding: 60px 40
 .cart-item-info { flex: 1; }
 .cart-item-info h3 { font-size: 1.05rem; color: var(--plum); margin-bottom: 4px; }
 .cart-item-info p { font-size: 0.88rem; color: var(--text-soft); }
+.qty-controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.qty-btn { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--pink); background: transparent; color: var(--plum); font-size: 1.1rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
+.qty-btn:hover { background: var(--pink); color: var(--white); }
+.qty-display { min-width: 24px; text-align: center; font-weight: 600; font-size: 0.95rem; color: var(--plum); }
+.cart-item-line-total { font-weight: 600; color: var(--plum); font-size: 0.95rem; flex-shrink: 0; min-width: 70px; text-align: right; }
+.summary-row.free-shipping span:last-child { color: var(--pink-deep); font-weight: 600; }
 .remove-btn { background: none; border: 1.5px solid #eee; color: var(--text-soft); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: var(--transition); }
 .remove-btn:hover { border-color: #e74c3c; color: #e74c3c; }
 .cart-summary { background: var(--white); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow); max-width: 400px; margin-left: auto; }

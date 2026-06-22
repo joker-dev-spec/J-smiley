@@ -11,17 +11,17 @@
 
   <header id="header" class="scrolled">
     <div class="header-inner">
-      <a href="index.html" class="logo">
-  <div class="logo-img-wrap">
-    <img src="glow-logo.png" alt="Glow Co." 
-         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-    <div class="logo-mark" style="display:none;">G</div>
-  </div>
-  low Co<span class="logo-dot">.</span>
-</a>
+      <a href="home.html" class="logo">
+        <div class="logo-img-wrap">
+          <img src="logo.jpeg" alt="Glow Co."
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="logo-mark" style="display:none;">G</div>
+        </div>
+        low Co<span class="logo-dot">.</span>
+      </a>
       <nav>
         <ul>
-          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="home.html" class="nav-link">Home</a></li>
           <li><a href="shop.html" class="nav-link">Shop</a></li>
           <li><a href="quiz.html" class="nav-link">Skin Quiz</a></li>
           <li><a href="about.html" class="nav-link">About</a></li>
@@ -59,17 +59,17 @@
     <div class="payment-modal">
       <div class="modal-header">
         <div><h2>Complete Payment</h2><p>Choose how you'd like to pay</p></div>
-        <button class="modal-close" id="modalClose">✕</button>
+        <button class="modal-close" id="modalClose">&#x2715;</button>
       </div>
       <div class="modal-body">
         <div class="modal-order-total">
           <span>Order Total</span>
-          <span id="modalTotal">₦0</span>
+          <span id="modalTotal">&#x20A6;0</span>
         </div>
         <div class="payment-methods">
-          <button class="pay-method-btn selected" data-method="bank"><span class="pay-icon">🏦</span><span>Bank Transfer</span></button>
-          <button class="pay-method-btn" data-method="card"><span class="pay-icon">💳</span><span>Card</span></button>
-          <button class="pay-method-btn" data-method="whatsapp"><span class="pay-icon">💬</span><span>WhatsApp</span></button>
+          <button class="pay-method-btn selected" data-method="bank"><span class="pay-icon">&#x1F3E6;</span><span>Bank Transfer</span></button>
+          <button class="pay-method-btn" data-method="card"><span class="pay-icon">&#x1F4B3;</span><span>Card</span></button>
+          <button class="pay-method-btn" data-method="whatsapp"><span class="pay-icon">&#x1F4AC;</span><span>WhatsApp</span></button>
         </div>
 
         <div class="payment-panel active" id="panel-bank">
@@ -77,10 +77,10 @@
             <div class="bank-row"><span class="label">Bank</span><span class="value">Zenith Bank</span></div>
             <div class="bank-row"><span class="label">Account Name</span><span class="value">Glow Co. Nigeria Ltd</span></div>
             <div class="bank-row"><span class="label">Account Number</span><span class="value" id="accNumDisplay">2234567890</span><button class="bank-copy" onclick="copyAccNum()">Copy</button></div>
-            <div class="bank-row"><span class="label">Amount</span><span class="value" id="bankAmount">₦0</span></div>
+            <div class="bank-row"><span class="label">Amount</span><span class="value" id="bankAmount">&#x20A6;0</span></div>
           </div>
           <p style="font-size:0.82rem;color:var(--text-soft);line-height:1.6;text-align:center;">Transfer the exact amount above, then send proof of payment to us on WhatsApp.</p>
-          <button class="modal-pay-btn" onclick="confirmBankTransfer()">I've Made the Transfer →</button>
+          <button class="modal-pay-btn" onclick="confirmBankTransfer()">I've Made the Transfer &#x2192;</button>
         </div>
 
         <div class="payment-panel" id="panel-card">
@@ -92,12 +92,13 @@
           </div>
           <div class="form-group"><label>Delivery Address</label><input type="text" id="deliveryAddr" placeholder="12 Lekki Phase 1, Lagos" autocomplete="street-address"></div>
           <div class="form-group"><label>Phone Number</label><input type="tel" id="phoneNum" placeholder="0812 345 6789" autocomplete="tel"></div>
-          <button class="modal-pay-btn" onclick="processCardPayment()">Pay <span id="cardPayAmount"></span> →</button>
+          <p style="font-size:0.78rem;color:var(--text-soft);text-align:center;margin-bottom:12px;line-height:1.5;">Your order details will be sent to us on WhatsApp to complete payment.</p>
+          <button class="modal-pay-btn" onclick="processCardPayment()">Send Order via WhatsApp &#x2192;</button>
         </div>
 
         <div class="payment-panel" id="panel-whatsapp">
           <div class="whatsapp-pay-block">
-            <div style="font-size:3rem;">💬</div>
+            <div style="font-size:3rem;">&#x1F4AC;</div>
             <p>Send your order details directly to us on WhatsApp. We'll confirm availability, share payment details, and arrange delivery.</p>
             <button class="btn-whatsapp" onclick="openWhatsAppOrder()">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -108,7 +109,7 @@
 
         <div class="secure-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Secure & encrypted payment
+          Secure &amp; encrypted payment
         </div>
       </div>
     </div>
@@ -119,175 +120,357 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="logo">
-          <img src="glow-logo.png" alt="Glow Co." class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="logo-mark" style="display:none;">G</div>
+        <a href="home.html" class="logo">
+          <div class="logo-img-wrap">
+            <img src="logo.jpeg" alt="Glow Co."
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="logo-mark" style="display:none;">G</div>
+          </div>
           low Co<span class="logo-dot">.</span>
         </a>
-        <p>Premium body creams, perfumes<br>& lotions for every skin type.</p>
+        <p>Premium body creams, perfumes<br>&amp; lotions for every skin type.</p>
       </div>
-      <div class="footer-links"><h4>Shop</h4><a href="shop.html">All Products</a><a href="cart.html">Your Cart</a><a href="wishlist.html">Wishlist</a></div>
-      <div class="footer-links"><h4>Company</h4><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="tracking.html">Track Order</a></div>
-      <div class="footer-links"><h4>Follow Us</h4><a href="https://wa.me/qr/IEDMJTDBM3L6D1" target="_blank">WhatsApp</a><a href="https://www.instagram.com/okunborjanet85/profilecard/?igsh=MmFnMDEzanFmMzA5" target="_blank">Instagram</a><a href="https://www.tiktok.com" target="_blank">TikTok</a></div>
+      <div class="footer-links">
+        <h4>Shop</h4>
+        <a href="shop.html">All Products</a>
+        <a href="shop.html#perfumes">Perfumes</a>
+        <a href="shop.html#lotions">Body Lotions</a>
+        <a href="cart.html">Your Cart</a>
+        <a href="wishlist.html">Wishlist</a>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="quiz.html">Skin Quiz</a>
+        <a href="tracking.html">Track Order</a>
+      </div>
+      <div class="footer-links">
+        <h4>Follow Us</h4>
+        <a href="https://wa.me/qr/IEDMJTDBM3L6D1" target="_blank">WhatsApp</a>
+        <a href="https://www.instagram.com/okunborjanet85/profilecard/?igsh=MmFnMDEzanFmMzA5" target="_blank">Instagram</a>
+        <a href="https://www.tiktok.com" target="_blank">TikTok</a>
+      </div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2025 Glow Co. All rights reserved.</p></div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Glow Co. All rights reserved.</p>
+    </div>
   </footer>
 
   <script src="main.js"></script>
   <script>
-    // Valid promo codes: code → discount fraction
-    const PROMO_CODES = { 'GLOW10': 0.10, 'GLOW20': 0.20, 'NEWGLOW': 0.15 };
-    let appliedDiscount = 0;
+    var PROMO_CODES     = { GLOW10: 0.10, GLOW20: 0.20, NEWGLOW: 0.15 };
+    var appliedDiscount = 0;
+    var _currentTotal   = 0;
+    var _currentCart    = [];
 
     function applyPromo() {
-      const code = document.getElementById('promoInput').value.trim().toUpperCase();
-      const msg  = document.getElementById('promoMsg');
+      var input = document.getElementById("promoInput");
+      var msg   = document.getElementById("promoMsg");
+      if (!input || !msg) return;
+      var code = input.value.trim().toUpperCase();
       if (PROMO_CODES[code]) {
         appliedDiscount = PROMO_CODES[code];
-        msg.textContent = `✓ Code applied! ${Math.round(appliedDiscount * 100)}% off`;
-        msg.className = 'promo-msg ok';
+        msg.textContent = "Code applied! " + Math.round(appliedDiscount * 100) + "% off";
+        msg.className   = "promo-msg ok";
         renderCart();
       } else {
         appliedDiscount = 0;
-        msg.textContent = 'Invalid code. Try GLOW10 for 10% off.';
-        msg.className = 'promo-msg err';
+        msg.textContent = "Invalid code. Try GLOW10 for 10% off.";
+        msg.className   = "promo-msg err";
       }
+    }
+
+    function buildItemCard(item) {
+      var wrap = document.createElement("div");
+      wrap.className = "cart-item";
+
+      var img = document.createElement("img");
+      img.alt = item.name;
+      img.src = item.image || "";
+      img.onerror = function() {
+        this.style.background = "var(--pink-soft)";
+        this.src = "";
+      };
+      wrap.appendChild(img);
+
+      var info = document.createElement("div");
+      info.className = "cart-item-info";
+      var h3 = document.createElement("h3");
+      h3.textContent = item.name;
+      var p = document.createElement("p");
+      p.textContent = formatPrice(item.price) + " each";
+      info.appendChild(h3);
+      info.appendChild(p);
+      wrap.appendChild(info);
+
+      var qtyWrap = document.createElement("div");
+      qtyWrap.className = "qty-controls";
+
+      var minus = document.createElement("button");
+      minus.className   = "qty-btn qty-minus";
+      minus.title       = "Remove one";
+      minus.textContent = "-";
+      minus.addEventListener("click", function() {
+        var c    = getCart();
+        var name = item.name;
+        for (var i = c.length - 1; i >= 0; i--) {
+          if (c[i].name === name) { c.splice(i, 1); break; }
+        }
+        saveCart(c);
+        showToast("Quantity updated");
+        renderCart();
+      });
+
+      var qtyNum = document.createElement("span");
+      qtyNum.className   = "qty-display";
+      qtyNum.textContent = item.qty;
+
+      var plus = document.createElement("button");
+      plus.className   = "qty-btn qty-plus";
+      plus.title       = "Add one";
+      plus.textContent = "+";
+      plus.addEventListener("click", function() {
+        var c = getCart();
+        c.push({ name: item.name, price: item.price, image: item.image || "" });
+        saveCart(c);
+        showToast("Quantity updated");
+        renderCart();
+      });
+
+      qtyWrap.appendChild(minus);
+      qtyWrap.appendChild(qtyNum);
+      qtyWrap.appendChild(plus);
+      wrap.appendChild(qtyWrap);
+
+      var lineTotal = document.createElement("span");
+      lineTotal.className   = "cart-item-line-total";
+      lineTotal.textContent = formatPrice(item.price * item.qty);
+      wrap.appendChild(lineTotal);
+
+      return wrap;
     }
 
     function renderCart() {
-      const cart = getCart();
-      const container = document.getElementById('cartContent');
-      const subtitle  = document.getElementById('cartSubtitle');
+      var cart      = getCart();
+      var container = document.getElementById("cartContent");
+      var subtitle  = document.getElementById("cartSubtitle");
+      if (!container) return;
+
+      container.innerHTML = "";
 
       if (cart.length === 0) {
-        subtitle.textContent = '';
-        container.innerHTML = `
-          <div class="empty-cart">
-            <div style="font-size:4rem;margin-bottom:16px;">🛍️</div>
-            <h2>Your cart is empty</h2>
-            <p style="margin-bottom:28px;font-size:0.95rem;">Looks like you haven't added anything yet.</p>
-            <a href="shop.html" class="btn-primary">Browse products</a>
-          </div>`;
+        if (subtitle) subtitle.textContent = "";
+        var empty = document.createElement("div");
+        empty.className = "empty-cart";
+        var emptyLink = document.createElement("a");
+        emptyLink.href      = "shop.html";
+        emptyLink.className = "btn-primary";
+        emptyLink.textContent = "Browse products";
+        empty.innerHTML = "<div style='font-size:4rem;margin-bottom:16px;'>&#x1F6CD;&#xFE0F;</div><h2>Your cart is empty</h2><p style='margin-bottom:28px;font-size:0.95rem;'>Looks like you have not added anything yet.</p>";
+        empty.appendChild(emptyLink);
+        container.appendChild(empty);
         return;
       }
 
-      subtitle.textContent = `${cart.length} item${cart.length > 1 ? 's' : ''} in your cart`;
-
-      const subtotal  = cart.reduce((s, i) => s + i.price, 0);
-      const shipping  = subtotal >= 15000 ? 0 : 1500;
-      const discount  = Math.round(subtotal * appliedDiscount);
-      const total     = subtotal + shipping - discount;
-
-      const itemsHTML = cart.map((item, index) => `
-        <div class="cart-item">
-          <img src="${item.image}" alt="${item.name}"
-               onerror="this.style.background='var(--pink-soft)';this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22 viewBox=%220 0 80 80%22%3E%3Crect fill=%22%23FFE8EF%22 width=%2280%22 height=%2280%22/%3E%3Ctext x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2228%22%3E🧴%3C/text%3E%3C/svg%3E'">
-          <div class="cart-item-info">
-            <h3>${item.name}</h3>
-            <p>${formatPrice(item.price)}</p>
-          </div>
-          <button class="remove-btn" data-index="${index}" title="Remove">✕</button>
-        </div>`).join('');
-
-      container.innerHTML = `
-        <div class="cart-items-list">${itemsHTML}</div>
-        <div class="cart-summary">
-          <h2>Order Summary</h2>
-          <div class="summary-row"><span>Subtotal</span><span>${formatPrice(subtotal)}</span></div>
-          <div class="summary-row"><span>Shipping</span><span>${shipping === 0 ? 'Free 🎉' : formatPrice(shipping)}</span></div>
-          ${shipping > 0 ? `<div class="summary-row"><span style="font-size:0.78rem;color:var(--pink-deep)">Add ${formatPrice(15000 - subtotal)} more for free shipping</span></div>` : ''}
-          <div style="margin:16px 0 4px;font-size:0.78rem;font-weight:600;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.06em;">Promo Code</div>
-          <div class="promo-row">
-            <input type="text" id="promoInput" placeholder="e.g. GLOW10" value="${appliedDiscount ? Object.keys(PROMO_CODES).find(k => PROMO_CODES[k] === appliedDiscount) || '' : ''}">
-            <button class="promo-apply" onclick="applyPromo()">Apply</button>
-          </div>
-          <p class="promo-msg" id="promoMsg">${appliedDiscount ? `✓ ${Math.round(appliedDiscount*100)}% discount applied` : ''}</p>
-          ${discount > 0 ? `<div class="summary-row discount"><span>Discount (${Math.round(appliedDiscount*100)}%)</span><span>−${formatPrice(discount)}</span></div>` : ''}
-          <div class="summary-row total"><span>Total</span><span>${formatPrice(total)}</span></div>
-          <button class="btn-pink" id="checkoutBtn" style="width:100%;margin-top:20px;text-align:center;">Proceed to Checkout →</button>
-          <a href="shop.html" style="display:block;text-align:center;margin-top:16px;font-size:0.85rem;color:var(--text-soft);">← Continue Shopping</a>
-        </div>`;
-
-      document.querySelectorAll('.remove-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const c = getCart(); c.splice(Number(btn.dataset.index), 1); saveCart(c);
-          showToast('Removed from cart'); renderCart();
-        });
+      var grouped = [];
+      cart.forEach(function(item) {
+        var found = null;
+        for (var i = 0; i < grouped.length; i++) {
+          if (grouped[i].name === item.name) { found = grouped[i]; break; }
+        }
+        if (found) {
+          found.qty++;
+        } else {
+          grouped.push({ name: item.name, price: Number(item.price), image: item.image || "", qty: 1 });
+        }
       });
 
-      document.getElementById('checkoutBtn').addEventListener('click', () => openPaymentModal(total, cart));
+      var itemCount = cart.length;
+      if (subtitle) subtitle.textContent = itemCount + " item" + (itemCount > 1 ? "s" : "") + " in your cart";
+
+      var subtotal = 0;
+      cart.forEach(function(i) { subtotal += Number(i.price); });
+      var shipping = subtotal >= 15000 ? 0 : 1500;
+      var discount = Math.round(subtotal * appliedDiscount);
+      var total    = subtotal + shipping - discount;
+
+      _currentTotal = total;
+      _currentCart  = cart.slice();
+
+      var itemsList = document.createElement("div");
+      itemsList.className = "cart-items-list";
+      grouped.forEach(function(item) { itemsList.appendChild(buildItemCard(item)); });
+      container.appendChild(itemsList);
+
+      var summary = document.createElement("div");
+      summary.className = "cart-summary";
+
+      var promoCode = "";
+      if (appliedDiscount) {
+        var keys = Object.keys(PROMO_CODES);
+        for (var k = 0; k < keys.length; k++) {
+          if (PROMO_CODES[keys[k]] === appliedDiscount) { promoCode = keys[k]; break; }
+        }
+      }
+
+      var subtotalRow = document.createElement("div");
+      subtotalRow.className = "summary-row";
+      subtotalRow.innerHTML = "<span>Subtotal (" + itemCount + " item" + (itemCount > 1 ? "s" : "") + ")</span><span>" + formatPrice(subtotal) + "</span>";
+
+      var shippingRow = document.createElement("div");
+      shippingRow.className = shipping === 0 ? "summary-row free-shipping" : "summary-row";
+      shippingRow.innerHTML = "<span>Shipping</span><span>" + (shipping === 0 ? "Free &#x1F389;" : formatPrice(shipping)) + "</span>";
+
+      var summaryTitle = document.createElement("h2");
+      summaryTitle.textContent = "Order Summary";
+      summary.appendChild(summaryTitle);
+      summary.appendChild(subtotalRow);
+      summary.appendChild(shippingRow);
+
+      if (shipping > 0) {
+        var nearFree = document.createElement("div");
+        nearFree.className = "summary-row";
+        nearFree.innerHTML = "<span style='font-size:0.78rem;color:var(--pink-deep)'>Add " + formatPrice(15000 - subtotal) + " more for free shipping</span><span></span>";
+        summary.appendChild(nearFree);
+      }
+
+      var promoLabel = document.createElement("div");
+      promoLabel.style.cssText = "margin:16px 0 4px;font-size:0.78rem;font-weight:600;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.06em;";
+      promoLabel.textContent = "Promo Code";
+      summary.appendChild(promoLabel);
+
+      var promoRow = document.createElement("div");
+      promoRow.className = "promo-row";
+      var promoInput = document.createElement("input");
+      promoInput.type        = "text";
+      promoInput.id          = "promoInput";
+      promoInput.placeholder = "e.g. GLOW10";
+      promoInput.value       = promoCode;
+      var promoBtn = document.createElement("button");
+      promoBtn.className   = "promo-apply";
+      promoBtn.textContent = "Apply";
+      promoBtn.addEventListener("click", applyPromo);
+      promoRow.appendChild(promoInput);
+      promoRow.appendChild(promoBtn);
+      summary.appendChild(promoRow);
+
+      var promoMsg = document.createElement("p");
+      promoMsg.id        = "promoMsg";
+      promoMsg.className = "promo-msg" + (appliedDiscount ? " ok" : "");
+      promoMsg.textContent = appliedDiscount ? Math.round(appliedDiscount * 100) + "% discount applied" : "";
+      summary.appendChild(promoMsg);
+
+      if (discount > 0) {
+        var discRow = document.createElement("div");
+        discRow.className = "summary-row discount";
+        discRow.innerHTML = "<span>Discount (" + Math.round(appliedDiscount * 100) + "%)</span><span>-" + formatPrice(discount) + "</span>";
+        summary.appendChild(discRow);
+      }
+
+      var totalRow = document.createElement("div");
+      totalRow.className = "summary-row total";
+      totalRow.innerHTML = "<span>Total</span><span>" + formatPrice(total) + "</span>";
+      summary.appendChild(totalRow);
+
+      var checkoutBtn = document.createElement("button");
+      checkoutBtn.className   = "btn-pink";
+      checkoutBtn.textContent = "Proceed to Checkout";
+      checkoutBtn.style.cssText = "width:100%;margin-top:20px;text-align:center;";
+      checkoutBtn.addEventListener("click", openPaymentModal);
+      summary.appendChild(checkoutBtn);
+
+      var continueLink = document.createElement("a");
+      continueLink.href       = "shop.html";
+      continueLink.textContent = "Continue Shopping";
+      continueLink.style.cssText = "display:block;text-align:center;margin-top:16px;font-size:0.85rem;color:var(--text-soft);";
+      summary.appendChild(continueLink);
+
+      container.appendChild(summary);
     }
 
-    let _currentTotal = 0, _currentCart = [];
-
-    function openPaymentModal(total, cart) {
-      _currentTotal = total; _currentCart = cart;
-      document.getElementById('modalTotal').textContent   = formatPrice(total);
-      document.getElementById('bankAmount').textContent   = formatPrice(total);
-      document.getElementById('cardPayAmount').textContent = formatPrice(total);
-      document.getElementById('paymentOverlay').classList.add('open');
-      document.body.style.overflow = 'hidden';
+    function openPaymentModal() {
+      document.getElementById("modalTotal").textContent = formatPrice(_currentTotal);
+      document.getElementById("bankAmount").textContent = formatPrice(_currentTotal);
+      document.getElementById("paymentOverlay").classList.add("open");
+      document.body.style.overflow = "hidden";
     }
+
     function closePaymentModal() {
-      document.getElementById('paymentOverlay').classList.remove('open');
-      document.body.style.overflow = '';
+      document.getElementById("paymentOverlay").classList.remove("open");
+      document.body.style.overflow = "";
     }
-
-    document.getElementById('modalClose').addEventListener('click', closePaymentModal);
-    document.getElementById('paymentOverlay').addEventListener('click', e => { if (e.target === document.getElementById('paymentOverlay')) closePaymentModal(); });
-
-    document.querySelectorAll('.pay-method-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        document.querySelectorAll('.payment-panel').forEach(p => p.classList.remove('active'));
-        document.getElementById('panel-' + btn.dataset.method).classList.add('active');
-      });
-    });
-
-    document.getElementById('cardNumber').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g,'').substring(0,16);
-      e.target.value = v.replace(/(.{4})/g,'$1 ').trim();
-    });
-    document.getElementById('cardExpiry').addEventListener('input', e => {
-      let v = e.target.value.replace(/\D/g,'').substring(0,4);
-      if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2);
-      e.target.value = v;
-    });
 
     function copyAccNum() {
-      navigator.clipboard.writeText('2234567890').then(() => showToast('Account number copied!'));
+      navigator.clipboard.writeText("2234567890").then(function() {
+        showToast("Account number copied!");
+      });
     }
+
     function confirmBankTransfer() {
-      const lines = _currentCart.map(i => `• ${i.name} — ${formatPrice(i.price)}`).join('\n');
-      const msg = encodeURIComponent(`Hi Glow Co! I've made a bank transfer.\n${lines}\n\nTotal: ${formatPrice(_currentTotal)}\n\nPlease confirm receipt.`);
-      window.open('https://wa.me/qr/IEDMJTDBM3L6D1?text=' + msg, '_blank');
-      closePaymentModal(); showToast('🎉 Redirecting to WhatsApp to confirm!');
+      var lines = _currentCart.map(function(i) { return "- " + i.name + " (" + formatPrice(i.price) + ")"; }).join("\n");
+      var text  = "Hi Glow Co! I have made a bank transfer.\n\n" + lines + "\n\nTotal: " + formatPrice(_currentTotal) + "\n\nPlease confirm receipt.";
+      window.open("https://wa.me/qr/IEDMJTDBM3L6D1?text=" + encodeURIComponent(text), "_blank");
+      closePaymentModal();
+      showToast("Redirecting to WhatsApp to confirm!");
     }
+
     function processCardPayment() {
-      const name  = document.getElementById('cardName').value.trim();
-      const num   = document.getElementById('cardNumber').value.trim();
-      const exp   = document.getElementById('cardExpiry').value.trim();
-      const cvv   = document.getElementById('cardCvv').value.trim();
-      const addr  = document.getElementById('deliveryAddr').value.trim();
-      const phone = document.getElementById('phoneNum').value.trim();
-      if (!name||!num||!exp||!cvv||!addr||!phone) { showToast('Please fill in all fields'); return; }
-      if (num.replace(/\s/g,'').length < 16) { showToast('Enter a valid card number'); return; }
-      if (cvv.length < 3) { showToast('Enter a valid CVV'); return; }
-      const lines = _currentCart.map(i => `• ${i.name} — ${formatPrice(i.price)}`).join('\n');
-      const msg = encodeURIComponent(`Hi Glow Co! Order:\n${lines}\n\nTotal: ${formatPrice(_currentTotal)}\nAddress: ${addr}\nPhone: ${phone}`);
-      window.open('https://wa.me/qr/IEDMJTDBM3L6D1?text=' + msg, '_blank');
-      saveCart([]); appliedDiscount = 0; renderCart(); closePaymentModal();
-      showToast('🎉 Order sent! We\'ll confirm shortly.');
+      var name  = document.getElementById("cardName").value.trim();
+      var num   = document.getElementById("cardNumber").value.trim();
+      var exp   = document.getElementById("cardExpiry").value.trim();
+      var cvv   = document.getElementById("cardCvv").value.trim();
+      var addr  = document.getElementById("deliveryAddr").value.trim();
+      var phone = document.getElementById("phoneNum").value.trim();
+      if (!name || !num || !exp || !cvv || !addr || !phone) { showToast("Please fill in all fields"); return; }
+      if (num.replace(/\s/g, "").length < 16) { showToast("Enter a valid card number"); return; }
+      if (cvv.length < 3) { showToast("Enter a valid CVV"); return; }
+      var lines = _currentCart.map(function(i) { return "- " + i.name + " (" + formatPrice(i.price) + ")"; }).join("\n");
+      var text  = "Hi Glow Co! Order:\n\n" + lines + "\n\nTotal: " + formatPrice(_currentTotal) + "\nAddress: " + addr + "\nPhone: " + phone;
+      window.open("https://wa.me/qr/IEDMJTDBM3L6D1?text=" + encodeURIComponent(text), "_blank");
+      saveCart([]);
+      appliedDiscount = 0;
+      closePaymentModal();
+      renderCart();
+      showToast("Order sent! We will confirm shortly.");
     }
+
     function openWhatsAppOrder() {
-      const lines = _currentCart.map(i => `• ${i.name} — ${formatPrice(i.price)}`).join('\n');
-      const msg = encodeURIComponent(`Hi Glow Co! I'd like to order:\n${lines}\n\nTotal: ${formatPrice(_currentTotal)}`);
-      window.open('https://wa.me/qr/IEDMJTDBM3L6D1?text=' + msg, '_blank');
+      var lines = _currentCart.map(function(i) { return "- " + i.name + " (" + formatPrice(i.price) + ")"; }).join("\n");
+      var text  = "Hi Glow Co! I would like to order:\n\n" + lines + "\n\nTotal: " + formatPrice(_currentTotal);
+      window.open("https://wa.me/qr/IEDMJTDBM3L6D1?text=" + encodeURIComponent(text), "_blank");
       closePaymentModal();
     }
 
-    document.addEventListener('DOMContentLoaded', renderCart);
+    document.addEventListener("DOMContentLoaded", function() {
+      renderCart();
+
+      document.getElementById("modalClose").addEventListener("click", closePaymentModal);
+
+      document.getElementById("paymentOverlay").addEventListener("click", function(e) {
+        if (e.target === document.getElementById("paymentOverlay")) closePaymentModal();
+      });
+
+      document.querySelectorAll(".pay-method-btn").forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          document.querySelectorAll(".pay-method-btn").forEach(function(b) { b.classList.remove("selected"); });
+          btn.classList.add("selected");
+          document.querySelectorAll(".payment-panel").forEach(function(p) { p.classList.remove("active"); });
+          document.getElementById("panel-" + btn.dataset.method).classList.add("active");
+        });
+      });
+
+      document.getElementById("cardNumber").addEventListener("input", function(e) {
+        var v = e.target.value.replace(/\D/g, "").substring(0, 16);
+        e.target.value = v.replace(/(.{4})/g, "$1 ").trim();
+      });
+
+      document.getElementById("cardExpiry").addEventListener("input", function(e) {
+        var v = e.target.value.replace(/\D/g, "").substring(0, 4);
+        if (v.length >= 2) v = v.substring(0, 2) + " / " + v.substring(2);
+        e.target.value = v;
+      });
+    });
   </script>
 </body>
 </html>

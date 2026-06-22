@@ -21,24 +21,15 @@ function updateCartCount() {
 
 function addToCart(item) {
   const cart = getCart();
-  const alreadyIn = cart.some(c => c.name === item.name);
-  if (alreadyIn) {
-    showConfirm(
-      '🛍️ Already in your cart',
-      '"' + item.name + '" is already in your cart. Add another one?',
-      'Yes, add again', 'No thanks',
-      () => {
-        const c = getCart();
-        c.push({ name: item.name, price: Number(item.price), image: item.image || '' });
-        saveCart(c);
-        showToast('✓ Another ' + item.name + ' added');
-      }
-    );
-    return;
-  }
+  const prevSubtotal = cart.reduce((s, i) => s + Number(i.price), 0);
   cart.push({ name: item.name, price: Number(item.price), image: item.image || '' });
   saveCart(cart);
-  showToast('✓ ' + item.name + ' added to cart');
+  const newSubtotal = prevSubtotal + Number(item.price);
+  if (prevSubtotal < 15000 && newSubtotal >= 15000) {
+    showToast('🎉 Free shipping unlocked!');
+  } else {
+    showToast('✓ ' + item.name + ' added to cart');
+  }
 }
 
 // ── WISHLIST ──────────────────────────────────────────────────────────────────
